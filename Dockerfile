@@ -26,6 +26,9 @@ ENV TZ=America/Guayaquil
 # Copiar el JAR compilado desde el stage anterior
 COPY --from=build /app/target/*.jar app.jar
 
+# Crear directorio para la base de datos SQLite
+RUN mkdir -p /app/data
+
 # Exponer puerto
 EXPOSE 8081
 
