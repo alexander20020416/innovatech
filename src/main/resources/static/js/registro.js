@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:8081/api';
+// Detectar si estamos en local o en producción
+const API_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:8081/api'
+    : window.location.origin + '/api';
 
 document.getElementById('formRegistro').addEventListener('submit', async (e) => {
     e.preventDefault();
