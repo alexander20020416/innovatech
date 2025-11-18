@@ -33,15 +33,18 @@ public class DataSeeder implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        // Solo ejecutar si la BD está vacía
-        if (usuarioRepository.count() > 0) {
-            System.out.println("La base de datos ya contiene datos. Omitiendo seeding...");
-            return;
-        }
-        
         System.out.println("===========================================");
         System.out.println("Inicializando base de datos con datos de prueba...");
         System.out.println("===========================================");
+        
+        // FORZAR RECREACIÓN: Borrar todos los datos existentes
+        if (usuarioRepository.count() > 0) {
+            System.out.println("[INFO] Borrando datos existentes para recrearlos...");
+            horarioBarberoRepository.deleteAll();
+            servicioRepository.deleteAll();
+            usuarioRepository.deleteAll();
+            System.out.println("[OK] Datos anteriores eliminados");
+        }
         
         // Crear usuarios de prueba
         crearUsuarios();
