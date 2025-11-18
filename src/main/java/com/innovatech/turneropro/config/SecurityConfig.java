@@ -40,7 +40,6 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/debug/**").permitAll()  // Endpoints de debug
                 .requestMatchers("/api/servicios/**").permitAll()
                 .requestMatchers("/api/barberos/disponibles").permitAll()
                 .requestMatchers("/api/barberos/*/horarios-disponibles").permitAll()
