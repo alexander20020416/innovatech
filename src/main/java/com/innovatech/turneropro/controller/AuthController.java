@@ -43,7 +43,13 @@ public class AuthController {
             AuthResponse response = authService.login(request);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse("Credenciales inválidas"));
+            // Log del error real para debugging
+            System.out.println("===== ERROR EN LOGIN =====");
+            System.out.println("Mensaje: " + e.getMessage());
+            System.out.println("Tipo: " + e.getClass().getName());
+            e.printStackTrace();
+            System.out.println("==========================");
+            return ResponseEntity.badRequest().body(new ErrorResponse("Credenciales inválidas: " + e.getMessage()));
         }
     }
     
