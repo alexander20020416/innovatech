@@ -21,7 +21,8 @@ public class ServicioCorreoSingleton {
 
     private ServicioCorreoSingleton() throws MessagingException {
         // Leer credenciales desde variables de entorno
-        this.remitente = System.getenv().getOrDefault("MAIL_USERNAME", "turneropro2025@gmail.com");
+        // Para SendGrid: MAIL_FROM es el remitente, MAIL_USERNAME es 'apikey'
+        this.remitente = System.getenv().getOrDefault("MAIL_FROM", "turneropro2025@gmail.com");
         this.clave = System.getenv().getOrDefault("MAIL_PASSWORD", "tbeagxwqlhlcgpll");
         
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
@@ -84,7 +85,9 @@ public class ServicioCorreoSingleton {
         return Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(remitente, clave);
+                // Para SendGrid: username es 'apikey', para Gmail es el email
+                String username = System.getenv().getOrDefault("MAIL_USERNAME", remitente);
+                return new PasswordAuthentication(username, clave);
             }
         });
     }
