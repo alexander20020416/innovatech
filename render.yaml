@@ -28,13 +28,10 @@ services:
       - key: DB_DIALECT
         value: org.hibernate.dialect.PostgreSQLDialect
       
-      # Email Configuration (Gmail)
+      # Email Configuration (SendGrid HTTP API)
       # ⚠️ CONFIGURAR MANUALMENTE en Render Dashboard > Environment
-      - key: MAIL_USERNAME
-        sync: false  # Se configura manualmente
-      
-      - key: MAIL_PASSWORD
-        sync: false  # App Password de Gmail (configurar manualmente)
+      - key: SENDGRID_API_KEY
+        sync: false  # API Key de SendGrid (configurar manualmente)
       
       - key: MAIL_FROM
         value: turneropro2025@gmail.com

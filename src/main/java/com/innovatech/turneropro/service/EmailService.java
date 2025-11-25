@@ -1,7 +1,6 @@
 package com.innovatech.turneropro.service;
 
 import com.innovatech.turneropro.model.Reserva;
-import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
@@ -12,12 +11,7 @@ public class EmailService {
     private ServicioCorreoSingleton servicioCorreo;
 
     public EmailService() {
-        try {
-            this.servicioCorreo = ServicioCorreoSingleton.getInstancia();
-        } catch (MessagingException e) {
-            System.err.println("❌ Error al inicializar ServicioCorreoSingleton");
-            e.printStackTrace();
-        }
+        this.servicioCorreo = ServicioCorreoSingleton.getInstancia();
     }
     
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
