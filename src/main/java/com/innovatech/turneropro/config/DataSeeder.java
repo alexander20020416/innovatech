@@ -60,8 +60,8 @@ public class DataSeeder implements CommandLineRunner {
         System.out.println("===========================================");
         System.out.println("Usuarios de prueba:");
         System.out.println("  Admin: admin / password123");
-        System.out.println("  Barbero1: barbero1 / prueba$2025");
-        System.out.println("  Barbero2: barbero2 / EPNESCUELA252000");
+        System.out.println("  Barbero1: barbero1 / password123");
+        System.out.println("  Barbero2: barbero2 / password123");
         System.out.println("  Cliente1: cliente1 / password123");
         System.out.println("  Cliente2: cliente2 / password123");
         System.out.println("  TestRail: testrail / password123");
@@ -84,8 +84,8 @@ public class DataSeeder implements CommandLineRunner {
         // Barbero 1
         Usuario barbero1 = new Usuario();
         barbero1.setUsername("barbero1");
-        barbero1.setEmail("babero2025@gmail.com");
-        barbero1.setPassword(passwordEncoder.encode("prueba$2025"));
+        barbero1.setEmail("barbero1@turneropro.com");
+        barbero1.setPassword(passwordEncoder.encode("password123"));
         barbero1.setNombreCompleto("Carlos Martínez");
         barbero1.setTelefono("0991234568");
         barbero1.setRol(Usuario.RolUsuario.BARBERO);
@@ -96,8 +96,8 @@ public class DataSeeder implements CommandLineRunner {
         // Barbero 2
         Usuario barbero2 = new Usuario();
         barbero2.setUsername("barbero2");
-        barbero2.setEmail("cp3508338@gmail.com");
-        barbero2.setPassword(passwordEncoder.encode("EPNESCUELA252000"));
+        barbero2.setEmail("barbero2@turneropro.com");
+        barbero2.setPassword(passwordEncoder.encode("password123"));
         barbero2.setNombreCompleto("Miguel Sánchez");
         barbero2.setTelefono("0991234569");
         barbero2.setRol(Usuario.RolUsuario.BARBERO);

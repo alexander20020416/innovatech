@@ -22,7 +22,7 @@ public class ServicioCorreoSingleton {
         // Leer configuración desde variables de entorno
         this.apiKey = System.getenv().getOrDefault("SENDGRID_API_KEY", 
                       System.getenv().getOrDefault("MAIL_PASSWORD", ""));
-        this.remitente = System.getenv().getOrDefault("MAIL_FROM", "babero2025@gmail.com");
+        this.remitente = System.getenv().getOrDefault("MAIL_FROM", "turneropro2025@gmail.com");
         
         // Inicializar cliente SendGrid
         this.sendGridClient = new SendGrid(this.apiKey);

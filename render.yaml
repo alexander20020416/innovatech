@@ -34,7 +34,7 @@ services:
         sync: false  # API Key de SendGrid (configurar manualmente)
       
       - key: MAIL_FROM
-        value: babero2025@gmail.com
+        value: turneropro2025@gmail.com
       
       # CORS Configuration
       - key: CORS_ALLOWED_ORIGINS
