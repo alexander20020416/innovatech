@@ -47,9 +47,17 @@ public class ServicioCorreoSingleton {
     private Session crearSesionSMTP() {
         Properties props = new Properties();
         
-        // Configuración SMTP de Gmail
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        // Leer configuración desde variables de entorno (soporta Gmail y SendGrid)
+        String smtpHost = System.getenv().getOrDefault("MAIL_HOST", "smtp.gmail.com");
+        String smtpPort = System.getenv().getOrDefault("MAIL_PORT", "587");
+        
+        System.out.println("📧 Configuración SMTP:");
+        System.out.println("   Host: " + smtpHost);
+        System.out.println("   Port: " + smtpPort);
+        
+        // Configuración SMTP
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.port", smtpPort);
         props.put("mail.smtp.auth", "true");
         
         // STARTTLS (requerido por Gmail)
@@ -58,7 +66,7 @@ public class ServicioCorreoSingleton {
         
         // Configuración SSL/TLS mejorada para Render
         props.put("mail.smtp.ssl.protocols", "TLSv1.2 TLSv1.3");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        props.put("mail.smtp.ssl.trust", smtpHost);
         props.put("mail.smtp.ssl.checkserveridentity", "true");
         
         // Configuración adicional para evitar problemas de certificados en contenedores
