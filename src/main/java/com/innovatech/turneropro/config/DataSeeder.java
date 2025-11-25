@@ -84,7 +84,7 @@ public class DataSeeder implements CommandLineRunner {
         // Barbero 1
         Usuario barbero1 = new Usuario();
         barbero1.setUsername("barbero1");
-        barbero1.setEmail("barbero1@turneropro.com");
+        barbero1.setEmail("babero2025@gmail.com");
         barbero1.setPassword(passwordEncoder.encode("password123"));
         barbero1.setNombreCompleto("Carlos Martínez");
         barbero1.setTelefono("0991234568");
@@ -96,7 +96,7 @@ public class DataSeeder implements CommandLineRunner {
         // Barbero 2
         Usuario barbero2 = new Usuario();
         barbero2.setUsername("barbero2");
-        barbero2.setEmail("barbero2@turneropro.com");
+        barbero2.setEmail("cp3508338@gmail.com");
         barbero2.setPassword(passwordEncoder.encode("password123"));
         barbero2.setNombreCompleto("Miguel Sánchez");
         barbero2.setTelefono("0991234569");
