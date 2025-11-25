@@ -1,0 +1,58 @@
+services:
+  - type: web
+    name: turneropro
+    env: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    
+    # Variables de entorno para producción
+    envVars:
+      - key: PORT
+        value: 8081
+      
+      # JWT Configuration
+      - key: JWT_SECRET
+        generateValue: true
+      
+      # Database Configuration (Render provee PostgreSQL)
+      - key: DATABASE_URL
+        fromDatabase:
+          name: turneropro-db
+          property: connectionString
+      
+      - key: DB_DRIVER
+        value: org.postgresql.Driver
+      
+      - key: DB_DIALECT
+        value: org.hibernate.dialect.PostgreSQLDialect
+      
+      # Email Configuration (Gmail)
+      # ⚠️ CONFIGURAR MANUALMENTE en Render Dashboard > Environment
+      - key: MAIL_USERNAME
+        sync: false  # Se configura manualmente
+      
+      - key: MAIL_PASSWORD
+        sync: false  # App Password de Gmail (configurar manualmente)
+      
+      - key: MAIL_FROM
+        value: turneropro2025@gmail.com
+      
+      # CORS Configuration
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://turneropro.onrender.com
+      
+      # Logging
+      - key: LOG_LEVEL
+        value: INFO
+      
+      # Render detection flag
+      - key: RENDER
+        value: true
+
+# Database
+databases:
+  - name: turneropro-db
+    databaseName: turneropro
+    plan: free

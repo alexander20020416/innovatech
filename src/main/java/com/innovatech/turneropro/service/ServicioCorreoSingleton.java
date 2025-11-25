@@ -13,18 +13,26 @@ public class ServicioCorreoSingleton {
 
     private static ServicioCorreoSingleton instancia;
 
-    // ⚠️ Configuración de cuenta Gmail para TurneroPro
-    // App Password generado el 17/11/2025 a las 3:34 PM
-    private final String remitente = "turneropro2025@gmail.com";
-    private final String clave = "tbeagxwqlhlcgpll";  // App Password de Gmail (sin espacios)
+    // ✅ Configuración desde variables de entorno (seguro para producción)
+    private final String remitente;
+    private final String clave;
 
     private final Session sesion;
 
     private ServicioCorreoSingleton() throws MessagingException {
-        this.sesion = crearSesionSMTP();
+        // Leer credenciales desde variables de entorno
+        this.remitente = System.getenv().getOrDefault("MAIL_USERNAME", "turneropro2025@gmail.com");
+        this.clave = System.getenv().getOrDefault("MAIL_PASSWORD", "tbeagxwqlhlcgpll");
+        
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        System.out.println("✅ ServicioCorreoSingleton inicializado con Jakarta Mail");
-        System.out.println("📧 Remitente: " + remitente);
+        System.out.println("📧 Inicializando ServicioCorreoSingleton...");
+        System.out.println("   Remitente: " + remitente);
+        System.out.println("   Password configurado: " + (clave != null && !clave.isEmpty() ? "✅ SÍ" : "❌ NO"));
+        System.out.println("   Entorno: " + (System.getenv("RENDER") != null ? "RENDER" : "LOCAL"));
+        
+        this.sesion = crearSesionSMTP();
+        
+        System.out.println("✅ ServicioCorreoSingleton inicializado correctamente");
         System.out.println("🔐 Protocolo: Gmail SMTP over TLS (587)");
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     }
@@ -48,17 +56,22 @@ public class ServicioCorreoSingleton {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.starttls.required", "true");
         
-        // Configuración SSL/TLS
+        // Configuración SSL/TLS mejorada para Render
         props.put("mail.smtp.ssl.protocols", "TLSv1.2 TLSv1.3");
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        props.put("mail.smtp.ssl.checkserveridentity", "true");
         
-        // Timeouts (evitar bloqueos)
-        props.put("mail.smtp.connectiontimeout", "10000");
-        props.put("mail.smtp.timeout", "10000");
-        props.put("mail.smtp.writetimeout", "10000");
+        // Configuración adicional para evitar problemas de certificados en contenedores
+        props.put("mail.smtp.socketFactory.fallback", "false");
         
-        // Debug activado para diagnóstico
-        props.put("mail.debug", "true");
+        // Timeouts aumentados para conexiones de Render
+        props.put("mail.smtp.connectiontimeout", "30000");
+        props.put("mail.smtp.timeout", "30000");
+        props.put("mail.smtp.writetimeout", "30000");
+        
+        // Debug solo en desarrollo
+        boolean isProduction = System.getenv("RENDER") != null;
+        props.put("mail.debug", isProduction ? "false" : "true");
 
         return Session.getInstance(props, new Authenticator() {
             @Override

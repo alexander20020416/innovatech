@@ -16,9 +16,14 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# Instalar tzdata y certificados SSL para Gmail
-RUN apk add --no-cache tzdata ca-certificates && \
-    update-ca-certificates
+# Instalar tzdata, certificados SSL y openssl para Gmail SMTP
+# Actualizar certificados CA para evitar errores SSL con Gmail
+RUN apk add --no-cache \
+    tzdata \
+    ca-certificates \
+    openssl \
+    && update-ca-certificates \
+    && rm -rf /var/cache/apk/*
 
 # Configurar zona horaria de Ecuador/Colombia
 ENV TZ=America/Guayaquil
